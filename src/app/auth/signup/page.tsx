@@ -42,7 +42,7 @@ function Register() {
         setError('password_confirmation', { message: "password doesn't matched" })
       }
       else {
-        const response = await axios.post('http://127.0.0.1:8000/api/register', data)
+        const response = await axios.post('http://localhost:3000/api/users/signup', data)
         const responseData = response.data;
         if (responseData.status == 1) {
           dispatch(login({

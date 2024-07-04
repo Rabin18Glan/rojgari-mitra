@@ -68,8 +68,8 @@ function Login() {
         }
     }
     return !isSubmitSuccessful ? (
-        <div className='bg-gray-200 h-lvh w-full flex items-center justify-center '>
-            <form className="bg-white p-10 rounded-3xl flex flex-col gap-3 items-center" action="" onSubmit={handleSubmit(onSubmit)}>
+        <div className='bg-gray-50 h-lvh w-full flex items-center justify-center '>
+            <form className="border border-green-400 bg-white p-10 rounded-3xl flex flex-col gap-3 items-center" action="" onSubmit={handleSubmit(onSubmit)}>
                 <h1 className='text-black text-3xl font-semibold'>Login</h1>
                 <InputField type="email"
                     placeholder="Email"
@@ -85,7 +85,7 @@ function Login() {
                         // }
                     })}
                     error={errors.password?.message} />
-                <MyButton disabled={isSubmitting} className='text-black' type='submit' >login
+                <MyButton disabled={isSubmitting} className='' type='submit' >login
                     {isSubmitting ? "Loading" : "Login"}</MyButton>
                 {errors.root && <div className='text-red-500'>{errors.root.message}</div>}
                 <div>or</div>
