@@ -17,13 +17,19 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
         // Update the user document with the token and expiry time
         if (emailType === "VERIFY") {
             await User.findByIdAndUpdate(userId, {
-                verifyToken: hashedToken,
-                verifyTokenExpiry: Date.now() + 3600000, // 1 hour
+                $set:{
+                    
+                        verifyToken: hashedToken,
+                        verifyTokenExpiry: Date.now() + 3600000, // 1 hour
+                    
+                }
             });
         } else if (emailType === 'RESET') {
             await User.findByIdAndUpdate(userId, {
-                forgotPasswordToken: hashedToken,
-                forgotPasswordTokenExpiry: Date.now() + 3600000, // 1 hour
+                $set:{
+                    forgotPasswordToken: hashedToken,
+                    forgotPasswordTokenExpiry: Date.now() + 3600000, // 1 hour
+                }
             });
         }
 

@@ -1,8 +1,8 @@
 import { connect } from "@/dbconfig/dbConfig";
 import User from "@/models/userModel";
-import {NextRequest,NextResponse} from "next/server"
-import bcryptjs from 'bcryptjs'
 import { sendEmail } from "@/utils/mailer";
+import bcryptjs from 'bcryptjs';
+import { NextRequest, NextResponse } from "next/server";
 connect(); //In vercel behind the scene functions are deployed. They can't find whether they are connected to data base or not . So we have to connect with database in every routing becuase nextjs run in edge(near server)
 
 export async function POST(request:NextRequest)
