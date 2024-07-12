@@ -6,7 +6,7 @@ function MyButton({className="",btnColor='customBlue',textColor='white',onClick,
   const bC = "bg-"+btnColor;
   return (
     <>
-  <button onClick={onClick } className={`border px-5 py-2 ${tC} rounded-3xl ${bC} shadow-custom ${className} text-black`} {...props}>{children}</button>
+  <button onClick={onClick } className={`border px-5 py-2 bg-blue-600 ${tC} rounded-3xl ${bC} shadow-custom ${className} text-black`} {...props}>{children}</button>
     </>
   );
 }

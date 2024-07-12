@@ -1,7 +1,9 @@
 "use client"
 import axios from 'axios';
+import { url } from 'inspector';
+import { redirect } from 'next/dist/server/api-utils';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import React, { useEffect, useState } from 'react'
 
@@ -9,12 +11,17 @@ function VerifyEmailPage() {
     const [token,setToken] = useState("");
     const [verified,setVerified]= useState(false);
     const [error,setError] = useState(false);
+    const router = useRouter();
 // const router = useRouter()
     const verifyEmail = async ()=>{
         try{
+            console.log(token)
             const response = await  axios.post("/api/users/verifyemail",{token})
-            setVerified(true);
-            setError(false)
+           if(response.status==200)
+           {
+            router.push('/login')
+           }
+            
         }
         catch(error:any)
         {

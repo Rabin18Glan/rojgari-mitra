@@ -1,26 +1,30 @@
 "use client";
 import MyButton from '@/components/Button/MyButton';
 import InputField from '@/components/InputField';
-import { useAppDispatch } from '@/store/hooks';
-import { login } from '@/store/slices/authSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { SubmitHandler, useForm } from 'react-hook-form'
-import {toast} from 'react-hot-toast';
-import { z } from 'zod'
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import { z } from 'zod';
+import { UserAuthData } from '@/types/userTypes';
+import { setUserAuthDetails } from '@/store/slices/userFormSlice';
 
 
 const schema = z.object({
   username: z.string().min(3),
+
   email: z.string().email(),
   password: z.string().min(8),
   password_confirmation: z.string().min(8),
-  role:z.enum(['freelancer','employer'])
+
 })
 type FormFields = z.infer<typeof schema>;
 
+
 function SignUpForm() {
+  const {role,skills,title} = useAppSelector(state=>state.userForm)
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -40,26 +44,30 @@ function SignUpForm() {
 
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    console.log(data)
+    const userData = {
+      ...data,
+role,
+skills,
+title
+    }
+    
     try {
       if (data.password !== data.password_confirmation) {
         setError('password_confirmation', { message: "password doesn't matched" })
       }
       else {
-        const response = await axios.post('http://localhost:3000/api/users/signup', data)
+        
+        console.log(userData);
+        const response = await axios.post('http://localhost:3000/api/users/signup',userData).catch((error)=>console.log(error))
         const responseData = response.data;
-        if (responseData.status == 200||responseData.success) {
-          dispatch(login({
-            userData: responseData.user,
-
-            token: responseData.token
-          }))
+        if (response.status == 200||responseData.success) {
+          router.push('/signup/check-email');
         }
-        console.log(responseData);
+        console.log(responseData.data.error);
      
       }
 
-      router.push('/login');
+     
 
     } catch (err:any) {
       setError("root", {
@@ -90,11 +98,8 @@ function SignUpForm() {
         <InputField type="password" placeholder='Confirm Password'
           register={register('password_confirmation')}
           error={errors.password_confirmation?.message} />
-          <InputField type="text" placeholder='Role'
-          register={register('role')}
-          error={errors.role?.message} />
         <MyButton disabled={isSubmitting} className='bg-blue-500' type='submit'>
-          {isSubmitting ? "Loading" : "Register"}</MyButton>
+          {isSubmitting ? "Loading" : "Create"}</MyButton>
         {errors.root && <div className='text-red-500'>Something went Wrong</div>}
 
       </form>

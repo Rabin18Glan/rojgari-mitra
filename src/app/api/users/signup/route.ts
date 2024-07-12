@@ -3,19 +3,20 @@ import User from "@/models/userModel";
 import { sendEmail } from "@/utils/mailer";
 import bcryptjs from 'bcryptjs';
 import { NextRequest, NextResponse } from "next/server";
-connect(); //In vercel behind the scene functions are deployed. They can't find whether they are connected to data base or not . So we have to connect with database in every routing becuase nextjs run in edge(near server)
-
+ //In vercel behind the scene functions are deployed. They can't find whether they are connected to data base or not . So we have to connect with database in every routing becuase nextjs run in edge(near server)
+ connect();
 export async function POST(request:NextRequest)
 {
 
 try{
-     
+  
     const reqBody =await request.json();
-    const {username,email,password,role} = reqBody;
-    //validation
     console.log(reqBody);
+    const {username,email,password,role,skills,title} = reqBody;
+    //validation
+   console.log(email)
 
-    const user = await User.findOne({email})
+    const user = await User.findOne({email:email})
 
     if(user)
         {
@@ -33,7 +34,10 @@ try{
             username,
             email,
             password:hashedPassword,
-            role
+            role,
+            skills,
+            title
+
         })
 
         const savedUser = await newUser.save();

@@ -1,4 +1,5 @@
-import JobPostList from '@/features/jobs/components/JobList'
+
+import { JobList } from '@/features/jobs'
 import Root from '@/layouts/root/RootLayout'
 import { faBackward } from '@fortawesome/free-solid-svg-icons'
 import { faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons/faArrowAltCircleDown'
@@ -43,7 +44,7 @@ const userWorkInfo =[
    </div>
    <div className='mt-5'>
    
-    <JobPostList />
+    <JobList />
    </div>
    </Root>
   )

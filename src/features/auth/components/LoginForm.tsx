@@ -1,15 +1,14 @@
 "use client";
 
-import MyButton from '@/components/Button/MyButton';
 import InputField from '@/components/InputField';
 import { useAppDispatch } from '@/store/hooks';
 import { login } from '@/store/slices/authSlice';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { signIn } from 'next-auth/react';
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom';
-import { z } from 'zod'
+import { useRouter } from 'next/navigation';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import Cookies from 'js-cookie';
 
 const schema = z.object({
     email: z.string().email(),
@@ -20,6 +19,7 @@ type FormFields = z.infer<typeof schema>;
 function LoginForm() {
     
     const dispatch = useAppDispatch();
+    const router = useRouter()
 
 
     const {
@@ -39,7 +39,15 @@ function LoginForm() {
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
 
         try{
-            signIn('credentials',{email:data.email,password:data.password});
+         const response = await axios.post('/api/users/login',data);
+console.log(response.data.error)
+          if(response.status==200)
+          {
+            dispatch(login(response.data.userData));
+            console.log("Login successful");
+            localStorage.setItem('auth', JSON.stringify(response.data.userData));
+            router.push('/find-work')
+          }
 
         }catch(err:any)
         {

@@ -4,32 +4,35 @@ interface UserData {
     user_id: string | null;
     name: string | null;
     email: string | null;
+    role:string | null;
+
 }
 
 interface AuthState {
-    token: string | null;
-    status: boolean;
+    loggedIn: boolean;
     userData: UserData;
 }
 
 const getInitialAuthState = (): AuthState => {
     if (typeof window !== "undefined") {
         const savedState = localStorage.getItem('auth');
-        const parsedState: AuthState | null = savedState ? JSON.parse(savedState) : null;
+        const userData: UserData| null =savedState ? JSON.parse(savedState) :  null;
         return {
-            token: parsedState?.token || null,
-            status: parsedState?.token ? true : false,
+          
+           loggedIn: userData ? true : false,
             userData: {
-                user_id: parsedState?.userData?.user_id || null,
-                name: parsedState?.userData?.name || null,
-                email: parsedState?.userData?.email || null,
+                user_id: userData?.user_id || null,
+                name: userData?.name || null,
+                email:userData?.email || null,
+                role:userData?.role||null
             }
         };
     } else {
         return {
-            token: null,
-            status: false,
+    
+            loggedIn: false,
             userData: {
+                role:null,
                 user_id: null,
                 name: null,
                 email: null,
@@ -44,19 +47,20 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state, action: PayloadAction<{ token: string, userData: UserData }>) => {
-            state.token = action.payload.token;
-            state.status = true;
+        login: (state, action: PayloadAction<{ userData: UserData }>) => {
+
+            state.loggedIn = true;
             state.userData = action.payload.userData;
             if (typeof window !== "undefined") {
-                const authData = { token: state.token, userData: state.userData };
+                const authData = {  userData: state.userData };
                 localStorage.setItem('auth', JSON.stringify(authData));
             }
         },
         logout: (state) => {
-            state.token = null;
-            state.status = false;
+          
+            state.loggedIn = false;
             state.userData = {
+                role:null,
                 user_id: null,
                 name: null,
                 email: null,

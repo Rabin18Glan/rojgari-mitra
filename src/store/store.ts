@@ -4,6 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./slices/authSlice";
 import productSlice from "./slices/productSlice";
 import orderSlice from "./slices/orderSlice";
+import userFormSlice from "./slices/userFormSlice";
 
 
 export const store = configureStore(
@@ -11,7 +12,8 @@ export const store = configureStore(
         reducer:{
             auth:authSlice,
             products:productSlice,
-            order:orderSlice
+            order:orderSlice,
+            userForm:userFormSlice
 
         }
     }

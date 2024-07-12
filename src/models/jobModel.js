@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 
 
 const jobSchema = new mongoose.Schema({
-    clienId:String,
+   emplyer_id:mongoose.Schema.ObjectId,
     title:{
         type:String,
     required:[true,'Job Title required']},
 
-    desciption:{
+    description:{
         type:String,
         required:[true,'Job Description required']
     },
@@ -25,3 +25,9 @@ required:[true,'Job Budget required']
     
   
 });
+
+
+const Job =mongoose.models.jobs|| mongoose.model('jobs',jobSchema);
+
+
+export default Job;

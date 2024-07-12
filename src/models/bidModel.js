@@ -1,3 +1,7 @@
+const mongoose = require('mongoose');
+
+const {Schema} = mongoose;
+
 const bidSchema = new Schema({
     bid_id: { type: Schema.Types.ObjectId, auto: true },
     job_id: { type: Schema.Types.ObjectId, ref: 'Job', required: true },
@@ -8,5 +12,7 @@ const bidSchema = new Schema({
     updated_at: { type: Date, default: Date.now }
   });
   
-  module.exports = mongoose.model('Bid', bidSchema);
-  
+  const Bid =mongoose.models.bids|| mongoose.model('bids', bidSchema);
+
+
+  export default Bid;

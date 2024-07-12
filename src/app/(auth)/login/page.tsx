@@ -19,8 +19,8 @@ function page() {
         </div>
         <hr className='w-[80%] mt-3 h-3' />
         <div className='flex flex-col justify-center items-center'>
-            <h1>Don't have acount</h1>
-            <Link className=' text-blue-500 p-2 px-5 font-semibold rounded-xl' href='/signup'>Signup</Link>
+            <h1>Don't have an acount</h1>
+            <Link className=' text-blue-500 p-2 px-5 font-semibold rounded-xl' href='/signup'>Sign Up</Link>
         </div>
      </div>
      <div className="md:col-span-1 ">

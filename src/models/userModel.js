@@ -5,6 +5,12 @@ const userSchema = new Schema({
   username: { 
     type: String, 
     required: true },
+ title:{
+type:String,
+required:[true,'Title Required!']
+  },
+
+
   email: { 
     type: String,
      unique: true, 
@@ -15,6 +21,10 @@ const userSchema = new Schema({
   role: { type: String,
      enum: ['freelancer', 'employer'],
       required: true },
+ skills:{
+        type:Array,
+      },
+
   created_at: { type: Date, 
     default: Date.now },
   updated_at: { type: Date,

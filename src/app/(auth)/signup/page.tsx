@@ -20,7 +20,7 @@ function page() {
         </div>
         <hr className='w-[80%] mt-3 h-3' />
         <div className='flex flex-col justify-center items-center'>
-            <h1>Don't have acount</h1>
+            <h1>Already have an account</h1>
             <Link className=' text-blue-500 p-2 px-5 font-semibold rounded-xl' href='/login'>Sign In</Link>
         </div>
      </div>
