@@ -65,7 +65,7 @@ const authSlice = createSlice({
                 name: null,
                 email: null,
             };
-            if (typeof window !== "undefined") {
+            if (typeof window !== "undefined") {//for browsers
                 localStorage.removeItem('auth');
             }
         }

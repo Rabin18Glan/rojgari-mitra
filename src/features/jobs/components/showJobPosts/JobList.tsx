@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import JobCard from "./JobCard";
 import axios from "axios";
 import { LoaderIcon } from "react-hot-toast";
+import JobLoading from "./JobLoading";
+import JobSearchBar from "../JobSearchBar";
 
 interface Job {
   _id: string;
@@ -37,8 +39,11 @@ const JobList: React.FC = () => {
 
   return (
     <div className="container mx-auto p-5">
-      <h1 className="text-4xl font-bold text-black mb-6">Jobs</h1>
-{ !loading?jobs?jobs.map((job) => (
+      <div className="flex items-center gap-4"><h1 className="text-4xl font-bold text-black ">Jobs</h1>
+      <JobSearchBar />
+      </div>
+{ !loading?jobs?
+jobs.map((job) => (
       <JobCard
           key={job._id}
           title={job.title}
@@ -50,10 +55,7 @@ const JobList: React.FC = () => {
         />
    
       )):<div className="text-xl flext justify-center">No Job Available</div>:
-      <div className="w-52 h-52  bg-gray-300 animate-pulse">
-        Loding.....
-
-      </div>
+      <JobLoading />
 }
     </div>
   );

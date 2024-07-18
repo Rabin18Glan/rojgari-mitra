@@ -1,29 +1,21 @@
-import { UserAuthData, UserData } from "@/types/userTypes";
+import { UserAuthData, UserFormData } from "@/types/userTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
-interface Role{
-    role: '';
-}
 
-interface InitialState{
-    role:string,
-    skills:string[],
-    title:string,
-    userAuthDetails:UserAuthData
-}
 
-const initialState:InitialState={
+
+const initialState:UserFormData={
     role:'',
     skills:[],
     title:'',
-     userAuthDetails:{
-        name:null,
+        username:null,
         email:null,
-        password:null
+        password:null,
+        password_confirmation:null
      
        
-     },
+   
 
 }
 
@@ -45,7 +37,10 @@ state.title = action.payload.title;
          }
         ,
         setUserAuthDetails:(state, action: PayloadAction<{userAuthDetails:UserAuthData}>)=>{
-            state.userAuthDetails=action.payload.userAuthDetails;
+            state.username=action.payload.userAuthDetails.username;
+            state.password=action.payload.userAuthDetails.password;
+            state.email = action.payload.userAuthDetails.email
+            state.password_confirmation = action.payload.userAuthDetails.password_confirmation
            
 
         }
